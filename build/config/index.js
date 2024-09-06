@@ -9,4 +9,5 @@ dotenv_1.default.config();
 exports.config = {
     PORT: process.env.PORT,
     DB_URL: process.env.DB_URL,
+    BASE_URL: process.env.BASE_URL,
 };

@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const connection_1 = require("./dataBase/connection");
 const config_1 = require("./config");
+const expressApp_1 = require("./expressApp");
 function start() {
     const app = (0, express_1.default)();
     (0, connection_1.connectDb)();
+    (0, expressApp_1.expressApp)(app);
     app.listen(config_1.config.PORT, () => console.log(`server listening on port http://localhost:${config_1.config.PORT}`));
 }
 start();

@@ -7,14 +7,21 @@ exports.expressApp = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const errorMiddleware_1 = require("./middlewares/errorMiddleware");
+const userRoute_1 = require("./route/userRoute");
 const expressApp = (app) => {
+    console.log("eached at express app");
     app.use(express_1.default.json({ limit: "1mb" }));
     app.use(express_1.default.urlencoded({ extended: true }));
+    app.use((req, res, next) => {
+        console.log("request middleware");
+        next();
+    });
     app.use((0, cors_1.default)({
         origin: "*",
     }));
     //  routes
-    app.use();
+    app.use((0, userRoute_1.userRoute)());
+    // error handler
     app.use(errorMiddleware_1.errorMiddleware);
 };
 exports.expressApp = expressApp;
