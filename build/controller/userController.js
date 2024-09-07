@@ -16,15 +16,14 @@ exports.fetchUser = fetchUser;
 exports.fetchUserByLocation = fetchUserByLocation;
 exports.freezUser = freezUser;
 exports.updateUserInfo = updateUserInfo;
+exports.getSortedUsers = getSortedUsers;
 const errorHandler_1 = __importDefault(require("../middlewares/errorHandler"));
 const userRepository_1 = require("../dataBase/repository/userRepository");
 const axios_1 = require("../services/axios");
 function fetchUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log("reaching controller");
             const userName = req.body.userName;
-            console.log("reaching controller", userName);
             if (!userName)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let existingUser = yield (0, userRepository_1.isUserExist)(userName);
@@ -52,14 +51,11 @@ function fetchUser(req, res, next) {
 function fetchUserByLocation(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log("reaching controller");
             const location = req.body.location;
-            console.log("reaching controller", location);
             if (!location)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.getUserByLocation)(location);
-            console.log("user", user);
-            res.end();
+            res.json(user);
         }
         catch (error) {
             throw error;
@@ -69,13 +65,10 @@ function fetchUserByLocation(req, res, next) {
 function freezUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log("reaching controller");
             const { userName, value } = req.body;
-            console.log("reaching controller", userName);
             if (!userName)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.softDeleteUser)(userName, value);
-            console.log("user", user);
             res.end();
         }
         catch (error) {
@@ -86,14 +79,25 @@ function freezUser(req, res, next) {
 function updateUserInfo(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log("reaching controller");
             const { userName, key, value } = req.body;
-            console.log("reaching controller", userName);
             if (!userName)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.updateUser)(userName, key, value);
-            console.log("user", user);
-            res.end();
+            res.json(user);
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function getSortedUsers(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { key, sortValue } = req.body;
+            if (!key)
+                next(new errorHandler_1.default(400, "Relevent data should be provided"));
+            let user = yield (0, userRepository_1.fetchSortedUsers)(key, sortValue);
+            res.send(user);
         }
         catch (error) {
             throw error;

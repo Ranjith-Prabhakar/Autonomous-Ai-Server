@@ -12,40 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchUserService = fetchUserService;
-exports.fetchRepoService = fetchRepoService;
-const config_1 = require("../config");
-const axios_1 = __importDefault(require("axios"));
-function fetchUserService(userName) {
+exports.isFollowerListExist = isFollowerListExist;
+exports.createFollowersList = createFollowersList;
+const followersModel_1 = __importDefault(require("../model/followersModel"));
+function isFollowerListExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield axios_1.default.get(`${config_1.config.BASE_URL}/users/${userName}`);
-            return response.data;
+            let repo = yield followersModel_1.default.findOne({ userName });
+            return repo;
         }
         catch (error) {
-            if (error.response.statusText === "Not Found") {
-                return "Not Found";
-            }
-            else {
-                throw error;
-            }
+            throw error;
         }
     });
 }
-;
-function fetchRepoService(userName) {
+function createFollowersList(followersList) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield axios_1.default.get(`${config_1.config.BASE_URL}/users/${userName}/repos`);
-            return response.data;
+            let result = yield followersModel_1.default.create(followersList);
+            yield result.save();
+            return true;
         }
         catch (error) {
-            if (error.response.statusText === "Not Found") {
-                return "Not Found";
-            }
-            else {
-                throw error;
-            }
+            throw error;
         }
     });
 }

@@ -18,7 +18,9 @@ const repoModel_1 = __importDefault(require("../model/repoModel"));
 function isRepoExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let repo = yield repoModel_1.default.findOne({ "owner.login": userName });
+            let repo = yield repoModel_1.default.find({
+                "owner.login": userName,
+            });
             return repo;
         }
         catch (error) {
@@ -30,7 +32,7 @@ function createRepo(repo) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let result = yield repoModel_1.default.create(repo);
-            result.save();
+            yield result.save();
             return repo;
         }
         catch (error) {

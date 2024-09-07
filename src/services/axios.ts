@@ -17,10 +17,9 @@ export async function fetchUserService(userName: string) {
 ;
 
 
-export async function fetchRepoService(repos_url: string) {
+export async function fetchRepoService(userName: string) {
   try {
-    const response = await axios.get(`${repos_url}`);
-
+    const response = await axios.get(`${config.BASE_URL}/users/${userName}/repos`);
     return response.data;
   } catch (error: any) {
     if (error.response.statusText === "Not Found") {
@@ -30,5 +29,3 @@ export async function fetchRepoService(repos_url: string) {
     }
   }
 }
-
-;

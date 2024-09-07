@@ -14,7 +14,6 @@ export async function fetchMutualFriendsService(
 
       const paginationCount = Math.ceil(parseInt(count) / 100);
       let promiseAll = [];
-      console.time(`Fetching ${url}`);
 
       for (let i = 1; i <= paginationCount; i++) {
         // Push the promise from axios call
@@ -27,7 +26,6 @@ export async function fetchMutualFriendsService(
 
       // Wait for all Axios promises to resolve
       const responses = await Promise.all(promiseAll);
-      console.timeEnd(`Fetching ${url}`);
 
       // Access the data in each response and extract the 'login' property
       responses.forEach((response) => {
@@ -37,7 +35,6 @@ export async function fetchMutualFriendsService(
         allUsers = allUsers.concat(logins); // Concatenate the logins from each page
       });
 
-      console.log(`${url} logins:`, allUsers.length,allUsers);
       return allUsers;
     }
 
@@ -50,7 +47,6 @@ export async function fetchMutualFriendsService(
     // Find mutual friends: users present in both followings and followers
     const mutualFriends = followings.filter((user) => followers.includes(user));
 
-    console.log("Mutual Friends:", mutualFriends);
     return mutualFriends;
   } catch (error: any) {
     if (error.response?.statusText === "Not Found") {
@@ -60,4 +56,3 @@ export async function fetchMutualFriendsService(
     }
   }
 }
-

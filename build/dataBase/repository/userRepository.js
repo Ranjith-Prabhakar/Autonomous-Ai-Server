@@ -17,6 +17,7 @@ exports.createUser = createUser;
 exports.getUserByLocation = getUserByLocation;
 exports.softDeleteUser = softDeleteUser;
 exports.updateUser = updateUser;
+exports.fetchSortedUsers = fetchSortedUsers;
 const userModel_1 = __importDefault(require("../model/userModel"));
 function isUserExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -69,6 +70,18 @@ function updateUser(userName, key, value) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield userModel_1.default.updateOne({ login: userName }, { $set: { [key]: value } });
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function fetchSortedUsers(key, value) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const sortOrder = value === "asc" ? 1 : -1; // Use 'asc' for ascending, 'desc' for descending
+            const result = yield userModel_1.default.find().sort({ [key]: sortOrder });
             return result;
         }
         catch (error) {

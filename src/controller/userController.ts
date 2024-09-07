@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "../middlewares/errorHandler";
 import {
   createUser,
+  fetchSortedUsers,
   getUserByLocation,
   isUserExist,
   softDeleteUser,
@@ -15,9 +16,7 @@ export async function fetchUser(
   next: NextFunction
 ) {
   try {
-    console.log("reaching controller");
     const userName = req.body.userName;
-    console.log("reaching controller", userName);
     if (!userName) next(new ErrorHandler(400, "User name should be provided"));
     let existingUser = await isUserExist(userName);
     if (existingUser) {
@@ -45,13 +44,10 @@ export async function fetchUserByLocation(
   next: NextFunction
 ) {
   try {
-    console.log("reaching controller");
     const location = req.body.location;
-    console.log("reaching controller", location);
     if (!location) next(new ErrorHandler(400, "User name should be provided"));
     let user = await getUserByLocation(location);
-    console.log("user", user);
-    res.end();
+    res.json(user);
   } catch (error) {
     throw error;
   }
@@ -63,12 +59,9 @@ export async function freezUser(
   next: NextFunction
 ) {
   try {
-    console.log("reaching controller");
     const { userName, value } = req.body;
-    console.log("reaching controller", userName);
     if (!userName) next(new ErrorHandler(400, "User name should be provided"));
     let user = await softDeleteUser(userName, value);
-    console.log("user", user);
     res.end();
   } catch (error) {
     throw error;
@@ -81,13 +74,22 @@ export async function updateUserInfo(
   next: NextFunction
 ) {
   try {
-    console.log("reaching controller");
     const { userName, key, value } = req.body;
-    console.log("reaching controller", userName);
     if (!userName) next(new ErrorHandler(400, "User name should be provided"));
     let user = await updateUser(userName, key, value);
-    console.log("user", user);
-    res.end();
+    res.json(user);
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function getSortedUsers(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { key, sortValue } = req.body;
+    if (!key) next(new ErrorHandler(400, "Relevent data should be provided"));
+    let user = await fetchSortedUsers(key, sortValue);
+    res.send(user);
   } catch (error) {
     throw error;
   }

@@ -54,3 +54,13 @@ export async function updateUser(userName: string, key: string, value: string) {
     throw error;
   }
 }
+export async function fetchSortedUsers(key: string, value: string) {
+  try {
+    const sortOrder = value === "asc" ? 1 : -1; // Use 'asc' for ascending, 'desc' for descending
+    const result = await userModel.find().sort({ [key]: sortOrder });
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
