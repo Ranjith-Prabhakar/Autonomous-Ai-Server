@@ -7,7 +7,7 @@ exports.expressApp = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const errorMiddleware_1 = require("./middlewares/errorMiddleware");
-const userRoute_1 = require("./route/userRoute");
+const routes_1 = require("./route/routes");
 const expressApp = (app) => {
     console.log("eached at express app");
     app.use(express_1.default.json({ limit: "1mb" }));
@@ -20,7 +20,7 @@ const expressApp = (app) => {
         origin: "*",
     }));
     //  routes
-    app.use((0, userRoute_1.userRoute)());
+    app.use((0, routes_1.userRoute)());
     // error handler
     app.use(errorMiddleware_1.errorMiddleware);
 };

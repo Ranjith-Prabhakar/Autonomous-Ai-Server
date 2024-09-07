@@ -31,3 +31,26 @@ export async function getUserByLocation(location: string) {
   }
 }
 
+export async function softDeleteUser(userName: string, value: string) {
+  try {
+    const result = await userModel.updateOne(
+      { login: userName },
+      { $set: { userStatus: value } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUser(userName: string, key: string, value: string) {
+  try {
+    const result = await userModel.updateOne(
+      { login: userName },
+      { $set: { [key]: value } }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}

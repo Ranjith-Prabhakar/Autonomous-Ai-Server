@@ -3,6 +3,11 @@ import { IGitHubUser } from "../../types/userModal";
 
 const GitHubUserSchema: Schema<IGitHubUser> = new mongoose.Schema(
   {
+    userStatus: {
+      type: String,
+      default: "active",
+      enum: ["active", "freeze"],
+    },
     login: { type: String },
     id: { type: Number },
     node_id: { type: String },

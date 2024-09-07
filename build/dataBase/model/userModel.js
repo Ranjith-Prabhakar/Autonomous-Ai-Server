@@ -5,6 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const GitHubUserSchema = new mongoose_1.default.Schema({
+    userStatus: {
+        type: String,
+        default: "active",
+        enum: ["active", "freeze"],
+    },
     login: { type: String },
     id: { type: Number },
     node_id: { type: String },

@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
-import { userRoute } from "./route/userRoute";
+import { userRoute } from "./route/routes";
 
 export const expressApp = (app: Express) => {
   console.log("eached at express app");

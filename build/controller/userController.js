@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchUser = fetchUser;
 exports.fetchUserByLocation = fetchUserByLocation;
+exports.freezUser = freezUser;
+exports.updateUserInfo = updateUserInfo;
 const errorHandler_1 = __importDefault(require("../middlewares/errorHandler"));
 const userRepository_1 = require("../dataBase/repository/userRepository");
 const axios_1 = require("../services/axios");
@@ -56,6 +58,40 @@ function fetchUserByLocation(req, res, next) {
             if (!location)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.getUserByLocation)(location);
+            console.log("user", user);
+            res.end();
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function freezUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log("reaching controller");
+            const { userName, value } = req.body;
+            console.log("reaching controller", userName);
+            if (!userName)
+                next(new errorHandler_1.default(400, "User name should be provided"));
+            let user = yield (0, userRepository_1.softDeleteUser)(userName, value);
+            console.log("user", user);
+            res.end();
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function updateUserInfo(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log("reaching controller");
+            const { userName, key, value } = req.body;
+            console.log("reaching controller", userName);
+            if (!userName)
+                next(new errorHandler_1.default(400, "User name should be provided"));
+            let user = yield (0, userRepository_1.updateUser)(userName, key, value);
             console.log("user", user);
             res.end();
         }

@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isUserExist = isUserExist;
 exports.createUser = createUser;
 exports.getUserByLocation = getUserByLocation;
+exports.softDeleteUser = softDeleteUser;
+exports.updateUser = updateUser;
 const userModel_1 = __importDefault(require("../model/userModel"));
 function isUserExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -45,6 +47,28 @@ function getUserByLocation(location) {
             const result = yield userModel_1.default.find({
                 location: { $regex: new RegExp(location, "i") },
             });
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function softDeleteUser(userName, value) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield userModel_1.default.updateOne({ login: userName }, { $set: { userStatus: value } });
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function updateUser(userName, key, value) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield userModel_1.default.updateOne({ login: userName }, { $set: { [key]: value } });
             return result;
         }
         catch (error) {

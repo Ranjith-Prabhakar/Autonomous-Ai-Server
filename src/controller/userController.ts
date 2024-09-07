@@ -4,6 +4,8 @@ import {
   createUser,
   getUserByLocation,
   isUserExist,
+  softDeleteUser,
+  updateUser,
 } from "../dataBase/repository/userRepository";
 import { fetchUserService } from "../services/axios";
 
@@ -48,6 +50,42 @@ export async function fetchUserByLocation(
     console.log("reaching controller", location);
     if (!location) next(new ErrorHandler(400, "User name should be provided"));
     let user = await getUserByLocation(location);
+    console.log("user", user);
+    res.end();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function freezUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    console.log("reaching controller");
+    const { userName, value } = req.body;
+    console.log("reaching controller", userName);
+    if (!userName) next(new ErrorHandler(400, "User name should be provided"));
+    let user = await softDeleteUser(userName, value);
+    console.log("user", user);
+    res.end();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUserInfo(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    console.log("reaching controller");
+    const { userName, key, value } = req.body;
+    console.log("reaching controller", userName);
+    if (!userName) next(new ErrorHandler(400, "User name should be provided"));
+    let user = await updateUser(userName, key, value);
     console.log("user", user);
     res.end();
   } catch (error) {
