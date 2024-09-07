@@ -32,6 +32,7 @@ function fetchUserService(userName) {
         }
     });
 }
+;
 function fetchRepoService(repos_url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

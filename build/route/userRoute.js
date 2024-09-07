@@ -14,5 +14,6 @@ function userRoute() {
     router.post("/fetchUser", userController_1.fetchUser);
     router.post("/fetchRepo", repoController_1.fetchRepo);
     router.post("/fetchMutualFriends", mutualFriendsController_1.fetchMutualFriends);
+    router.post("/fetchUserByLocation", userController_1.fetchUserByLocation);
     return router;
 }

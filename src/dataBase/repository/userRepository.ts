@@ -19,3 +19,15 @@ export async function createUser(user: IGitHubUser) {
     throw error;
   }
 }
+
+export async function getUserByLocation(location: string) {
+  try {
+    const result = await userModel.find({
+      location: { $regex: new RegExp(location, "i") },
+    });
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+

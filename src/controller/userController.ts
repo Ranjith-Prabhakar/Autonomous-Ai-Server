@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "../middlewares/errorHandler";
-import { createUser, isUserExist } from "../dataBase/repository/userRepository";
+import {
+  createUser,
+  getUserByLocation,
+  isUserExist,
+} from "../dataBase/repository/userRepository";
 import { fetchUserService } from "../services/axios";
 
 export async function fetchUser(
@@ -28,6 +32,24 @@ export async function fetchUser(
         }
       }
     }
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchUserByLocation(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    console.log("reaching controller");
+    const location = req.body.location;
+    console.log("reaching controller", location);
+    if (!location) next(new ErrorHandler(400, "User name should be provided"));
+    let user = await getUserByLocation(location);
+    console.log("user", user);
+    res.end();
   } catch (error) {
     throw error;
   }

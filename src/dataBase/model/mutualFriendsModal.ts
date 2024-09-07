@@ -1,10 +1,7 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { IGitHubUser } from "../../types/userModal";
+import { TMutualFriend } from "../../types/mutualFriends";
 
-type TMutualFriend = {
-  userName: string;
-  friends: [string];
-};
+
 const mutualFriendSchema: Schema<TMutualFriend> = new mongoose.Schema(
   {
     userName: { type: String, required: true },

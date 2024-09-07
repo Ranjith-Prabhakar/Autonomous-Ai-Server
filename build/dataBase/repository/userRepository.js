@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isUserExist = isUserExist;
 exports.createUser = createUser;
+exports.getUserByLocation = getUserByLocation;
 const userModel_1 = __importDefault(require("../model/userModel"));
 function isUserExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -32,6 +33,19 @@ function createUser(user) {
             let result = yield userModel_1.default.create(user);
             result.save();
             return user;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function getUserByLocation(location) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield userModel_1.default.find({
+                location: { $regex: new RegExp(location, "i") },
+            });
+            return result;
         }
         catch (error) {
             throw error;

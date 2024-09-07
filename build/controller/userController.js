@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchUser = fetchUser;
+exports.fetchUserByLocation = fetchUserByLocation;
 const errorHandler_1 = __importDefault(require("../middlewares/errorHandler"));
 const userRepository_1 = require("../dataBase/repository/userRepository");
 const axios_1 = require("../services/axios");
@@ -40,6 +41,23 @@ function fetchUser(req, res, next) {
                     }
                 }
             }
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function fetchUserByLocation(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log("reaching controller");
+            const location = req.body.location;
+            console.log("reaching controller", location);
+            if (!location)
+                next(new errorHandler_1.default(400, "User name should be provided"));
+            let user = yield (0, userRepository_1.getUserByLocation)(location);
+            console.log("user", user);
+            res.end();
         }
         catch (error) {
             throw error;

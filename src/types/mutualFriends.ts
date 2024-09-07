@@ -19,3 +19,8 @@ export type TMutualFriends = {
   type: string;
   site_admin: boolean;
 };
+
+export type TMutualFriend = {
+  userName: string;
+  friends: [string];
+};
