@@ -9,11 +9,18 @@ export async function isMutualFriendsExist(userName: string) {
   }
 }
 
-export async function createMutualFriends(userName: string, mutualFriends: string[]) {
+export type TMutualFriendStructure = {
+  userName: string;
+  friends: string[];
+};
+export async function createMutualFriends({
+  userName,
+  friends,
+}: TMutualFriendStructure) {
   try {
     let saveMutualFriends = await mutualFriendsModel.create({
       userName,
-      friends: mutualFriends,
+      friends,
     });
     await saveMutualFriends.save();
     return true;

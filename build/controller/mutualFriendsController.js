@@ -28,8 +28,12 @@ function fetchMutualFriends(req, res, next) {
             }
             else {
                 let mutualFriends = yield (0, mutualFriendsService_1.fetchMutualFriendsService)(userName, followingCount, followersCount);
-                yield (0, mutualFriendsRepo_1.createMutualFriends)(userName, mutualFriends);
-                res.status(200).json({ status: 200, data: mutualFriends });
+                let updatedMutualFriendStructure = {
+                    userName: userName,
+                    friends: mutualFriends,
+                };
+                yield (0, mutualFriendsRepo_1.createMutualFriends)(updatedMutualFriendStructure);
+                res.status(200).json({ status: 200, data: updatedMutualFriendStructure });
             }
         }
         catch (error) {

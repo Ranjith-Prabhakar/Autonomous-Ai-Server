@@ -24,9 +24,13 @@ export async function fetchMutualFriends(
         followingCount,
         followersCount
       );
+      let updatedMutualFriendStructure = {
+        userName: userName as string,
+        friends: mutualFriends as string[],
+      };
 
-      await createMutualFriends(userName, mutualFriends as string[]);
-      res.status(200).json({ status: 200, data: mutualFriends });
+      await createMutualFriends(updatedMutualFriendStructure);
+      res.status(200).json({ status: 200, data: updatedMutualFriendStructure });
     }
   } catch (error) {
     throw error;

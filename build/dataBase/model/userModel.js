@@ -8,7 +8,7 @@ const GitHubUserSchema = new mongoose_1.default.Schema({
     userStatus: {
         type: String,
         default: "active",
-        enum: ["active", "freeze"],
+        enum: ["active", "freez"],
     },
     login: { type: String },
     id: { type: Number },

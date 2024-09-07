@@ -62,7 +62,7 @@ export async function freezUser(
     const { userName, value } = req.body;
     if (!userName) next(new ErrorHandler(400, "User name should be provided"));
     let user = await softDeleteUser(userName, value);
-    res.end();
+    res.json({ user });
   } catch (error) {
     throw error;
   }

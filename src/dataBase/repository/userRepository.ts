@@ -37,6 +37,7 @@ export async function softDeleteUser(userName: string, value: string) {
       { login: userName },
       { $set: { userStatus: value } }
     );
+    
     return result;
   } catch (error) {
     throw error;

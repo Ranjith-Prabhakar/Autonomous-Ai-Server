@@ -69,7 +69,7 @@ function freezUser(req, res, next) {
             if (!userName)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.softDeleteUser)(userName, value);
-            res.end();
+            res.json({ user });
         }
         catch (error) {
             throw error;

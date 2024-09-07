@@ -26,12 +26,12 @@ function isMutualFriendsExist(userName) {
         }
     });
 }
-function createMutualFriends(userName, mutualFriends) {
-    return __awaiter(this, void 0, void 0, function* () {
+function createMutualFriends(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ userName, friends, }) {
         try {
             let saveMutualFriends = yield mutualFriendsModal_1.default.create({
                 userName,
-                friends: mutualFriends,
+                friends,
             });
             yield saveMutualFriends.save();
             return true;
