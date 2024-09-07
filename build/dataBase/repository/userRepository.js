@@ -59,7 +59,15 @@ function softDeleteUser(userName, value) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield userModel_1.default.updateOne({ login: userName }, { $set: { userStatus: value } });
-            return result;
+            return result.acknowledged
+                ? {
+                    status: 200,
+                    message: `User status has been updated to ${value} mode`,
+                }
+                : {
+                    status: 400,
+                    message: `User status can't be updated`,
+                };
         }
         catch (error) {
             throw error;
@@ -70,7 +78,16 @@ function updateUser(userName, key, value) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield userModel_1.default.updateOne({ login: userName }, { $set: { [key]: value } });
-            return result;
+            return result.acknowledged
+                ? {
+                    status: 200,
+                    message: `Users ${key} detail has been updated to ${value}`,
+                }
+                : {
+                    status: 400,
+                    message: `User data can't be update`,
+                };
+            ;
         }
         catch (error) {
             throw error;

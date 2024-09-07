@@ -55,7 +55,7 @@ function fetchUserByLocation(req, res, next) {
             if (!location)
                 next(new errorHandler_1.default(400, "User name should be provided"));
             let user = yield (0, userRepository_1.getUserByLocation)(location);
-            res.json(user);
+            res.json(...user);
         }
         catch (error) {
             throw error;

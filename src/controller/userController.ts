@@ -47,7 +47,7 @@ export async function fetchUserByLocation(
     const location = req.body.location;
     if (!location) next(new ErrorHandler(400, "User name should be provided"));
     let user = await getUserByLocation(location);
-    res.json(user);
+    res.json(...user);
   } catch (error) {
     throw error;
   }

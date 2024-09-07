@@ -1,8 +1,8 @@
-import { Request as Req, Response as Res } from "express";
+import { Request, Response } from "express";
 import ErrorResponse from "./errorHandler";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const errorMiddleware = (err: any, req: Req, res: Res) => {
+export const errorMiddleware = (err: any, req: Request, res: Response) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "internal server error";
   console.log("inside error middleware #############", err.message, err.status);
