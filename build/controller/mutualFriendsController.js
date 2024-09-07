@@ -12,33 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchUser = fetchUser;
+exports.fetchMutualFriends = fetchMutualFriends;
 const errorHandler_1 = __importDefault(require("../middlewares/errorHandler"));
-const userRepository_1 = require("../dataBase/repository/userRepository");
-const axios_1 = require("../services/axios");
-function fetchUser(req, res, next) {
+const mutualFriendsRepo_1 = require("../dataBase/repository/mutualFriendsRepo");
+const mutualFriendsService_1 = require("../services/mutualFriendsService");
+function fetchMutualFriends(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log("reaching controller");
-            const userName = req.body.userName;
-            console.log("reaching controller", userName);
+            const { userName, followingCount, followersCount } = req.body;
             if (!userName)
                 next(new errorHandler_1.default(400, "User name should be provided"));
-            let existingUser = yield (0, userRepository_1.isUserExist)(userName);
-            if (existingUser) {
-                res.status(200).json({ status: 200, data: existingUser });
+            let existingMutualFriends = yield (0, mutualFriendsRepo_1.isMutualFriendsExist)(userName);
+            if (existingMutualFriends) {
+                res.status(200).json({ status: 200, data: existingMutualFriends });
             }
             else {
-                let user = yield (0, axios_1.fetchUserService)(userName);
-                if (user === "Not Found") {
-                    res.status(404).json({ status: 404, message: "Not Found" });
-                }
-                else {
-                    let result = yield (0, userRepository_1.createUser)(user);
-                    if (result) {
-                        res.status(200).json({ status: 200, data: user });
-                    }
-                }
+                let mutualFriends = yield (0, mutualFriendsService_1.fetchMutualFriendsService)(userName, followingCount, followersCount);
+                yield (0, mutualFriendsRepo_1.createMutualFriends)(userName, mutualFriends);
+                res.status(200).json({ status: 200, data: mutualFriends });
             }
         }
         catch (error) {

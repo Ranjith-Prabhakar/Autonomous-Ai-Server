@@ -1,7 +1,7 @@
-import { IGitHubUser } from "../model/interfaces";
+import { IGitHubUser } from "../../types/userModal";
 import userModel from "../model/userModel";
 
-export async function isExist(userName: string) {
+export async function isUserExist(userName: string) {
   try {
     let user = await userModel.findOne({ login: userName });
     return user;

@@ -12,16 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const connection_1 = require("./dataBase/connection");
-const config_1 = require("./config");
-const expressApp_1 = require("./expressApp");
-function start() {
+exports.isRepoExist = isRepoExist;
+exports.createRepo = createRepo;
+const repoModel_1 = __importDefault(require("../model/repoModel"));
+function isRepoExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = (0, express_1.default)();
-        (0, connection_1.connectDb)();
-        (0, expressApp_1.expressApp)(app);
-        app.listen(config_1.config.PORT, () => console.log(`server listening on port http://localhost:${config_1.config.PORT}`));
+        try {
+            let repo = yield repoModel_1.default.findOne({ "owner.login": userName });
+            return repo;
+        }
+        catch (error) {
+            throw error;
+        }
     });
 }
-start();
+function createRepo(repo) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let result = yield repoModel_1.default.create(repo);
+            result.save();
+            return repo;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}

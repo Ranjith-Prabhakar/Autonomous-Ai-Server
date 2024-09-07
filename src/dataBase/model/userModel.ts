@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { IGitHubUser } from "./interfaces";
+import { IGitHubUser } from "../../types/userModal";
 
 const GitHubUserSchema: Schema<IGitHubUser> = new mongoose.Schema(
   {

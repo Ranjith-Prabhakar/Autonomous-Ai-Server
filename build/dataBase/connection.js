@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDb = connectDb;
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = require("../config");
+console.log("config", config_1.config);
 function connectDb() {
     try {
         mongoose_1.default

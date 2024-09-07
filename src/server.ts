@@ -3,7 +3,7 @@ import { connectDb } from "./dataBase/connection";
 import { config } from "./config";
 import { expressApp } from "./expressApp";
 
-function start() {
+async function start() {
   const app = express();
   connectDb();
   expressApp(app);

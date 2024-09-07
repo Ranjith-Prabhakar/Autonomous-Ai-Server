@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {config} from "../config"; 
-
+console.log("config", config);
 export function connectDb() {
   try {
     mongoose

@@ -12,16 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const connection_1 = require("./dataBase/connection");
-const config_1 = require("./config");
-const expressApp_1 = require("./expressApp");
-function start() {
+exports.isMutualFriendsExist = isMutualFriendsExist;
+exports.createMutualFriends = createMutualFriends;
+const mutualFriendsModal_1 = __importDefault(require("../model/mutualFriendsModal"));
+function isMutualFriendsExist(userName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = (0, express_1.default)();
-        (0, connection_1.connectDb)();
-        (0, expressApp_1.expressApp)(app);
-        app.listen(config_1.config.PORT, () => console.log(`server listening on port http://localhost:${config_1.config.PORT}`));
+        try {
+            let mutualFriends = yield mutualFriendsModal_1.default.findOne({ userName });
+            return mutualFriends;
+        }
+        catch (error) {
+            throw error;
+        }
     });
 }
-start();
+function createMutualFriends(userName, mutualFriends) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let saveMutualFriends = yield mutualFriendsModal_1.default.create({
+                userName,
+                friends: mutualFriends,
+            });
+            yield saveMutualFriends.save();
+            return true;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}

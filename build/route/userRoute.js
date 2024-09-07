@@ -6,9 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRoute = userRoute;
 const express_1 = __importDefault(require("express"));
 const userController_1 = require("../controller/userController");
+const repoController_1 = require("../controller/repoController");
+const mutualFriendsController_1 = require("../controller/mutualFriendsController");
 function userRoute() {
     console.log("reaching the router");
     const router = express_1.default.Router();
     router.post("/fetchUser", userController_1.fetchUser);
+    router.post("/fetchRepo", repoController_1.fetchRepo);
+    router.post("/fetchMutualFriends", mutualFriendsController_1.fetchMutualFriends);
     return router;
 }

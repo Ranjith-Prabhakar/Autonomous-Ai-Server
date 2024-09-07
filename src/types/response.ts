@@ -1,4 +1,4 @@
-import { IGitHubUser } from "../dataBase/model/interfaces";
+import { IGitHubUser } from "./userModal";
 
 export interface IResponse {
   status: number;
